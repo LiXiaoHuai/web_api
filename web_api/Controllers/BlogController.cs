@@ -85,6 +85,48 @@ namespace web_api.Controllers
         }
         #endregion
 
+        #region 保存一个博客信息
+        public ResultData SaveBlogDetail(string Title, string Details, string Img, string id)
+        {
+            var result = new ResultData();
+            result.success = false;
+            var msg = string.Empty;
+            Blog blog = null;
+            if (string.IsNullOrEmpty(id))
+            {
+                blog = new Blog();
+            }
+            else
+            {
+                blog = db.Blog.Where(c => c.Id == id).FirstOrDefault();
+            }
+            blog.Img = Img;
+            blog.Title = Title;
+            blog.Details = Details;
 
+            result.success = BLLService.BlogServices.Save(blog, out msg);
+            result.msg = msg;
+
+            return result;
+        }
+
+        #endregion
+
+
+
+
+        #region 根据获取博客id删除内容
+        public ResultData DeleteBlogForId(string id)
+        {
+            var result = new ResultData();
+            result.success = false;
+            var msg = string.Empty;
+            result.success = BLLService.BlogServices.Delete(id, out msg);
+            result.msg = msg;
+            return result;
+        }
+
+
+        #endregion
     }
 }

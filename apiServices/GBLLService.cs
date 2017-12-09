@@ -22,5 +22,6 @@ namespace apiServices
             if (DbContext != null) DbContext.Dispose();
         }
         public BlogServices BlogServices { get { var o = new BlogServices(); o.BLLService = this; return o; } }
+        public CarouslService CarouslService { get { var o = new CarouslService(); o.BLLService = this; return o; } }
     }
 }

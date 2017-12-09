@@ -26,5 +26,6 @@ namespace apiServices
         }
     
         public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<Carousel> Carousel { get; set; }
     }
 }

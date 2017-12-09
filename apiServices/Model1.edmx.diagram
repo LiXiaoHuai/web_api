@@ -5,7 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9c0dfef56c0d4f9db92545ec6eeaa445" Name="Diagram1">
-        <EntityTypeShape EntityType="myproModel.Blog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myproModel.Blog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="myproModel.Carousel" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
