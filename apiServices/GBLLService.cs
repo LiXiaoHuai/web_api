@@ -9,10 +9,10 @@ namespace apiServices
 {
     public class GBLLService: IDisposable
     {
-        private myproEntities _DbContext = null;
-        public myproEntities DbContext { get { return _DbContext; } }
+        private myproEntities1 _DbContext = null;
+        public myproEntities1 DbContext { get { return _DbContext; } }
 
-        public GBLLService(myproEntities db)
+        public GBLLService(myproEntities1 db)
         {
             _DbContext = db;
         }
@@ -23,5 +23,6 @@ namespace apiServices
         }
         public BlogServices BlogServices { get { var o = new BlogServices(); o.BLLService = this; return o; } }
         public CarouslService CarouslService { get { var o = new CarouslService(); o.BLLService = this; return o; } }
+        public AccountServices AccountServices { get { var o = new AccountServices(); o.BLLService = this; return o; } }
     }
 }

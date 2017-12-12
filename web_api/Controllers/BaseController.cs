@@ -14,7 +14,7 @@ namespace web_api.Controllers
 {
     public class BaseController : ApiController
     {
-        protected myproEntities db
+        protected myproEntities1 db
         {
             get
             {
@@ -26,7 +26,7 @@ namespace web_api.Controllers
         protected JqGridJson jqGrid;
         public BaseController()
         {
-            BLLService = new GBLLService(new myproEntities());
+            BLLService = new GBLLService(new myproEntities1());
         }
        
 
@@ -57,6 +57,7 @@ namespace web_api.Controllers
 
         public BlogServices BlogServices { get { return BLLService.BlogServices; } }
         public CarouslService CarouslService { get { return BLLService.CarouslService; } }
+        public AccountServices AccountServices { get { return BLLService.AccountServices; } }
 
     }
 }
