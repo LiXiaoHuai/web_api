@@ -28,26 +28,32 @@ namespace web_api.Controllers
       
             result.pageIndex = page.ToString();
             result.pageSize = rows.ToString();
-            result.totalPage = (q.Count()/ _rows).ToString();
+            result.totalPage = ((q.Count() / _rows) + 1).ToString();
             result.totalCount = q.Count().ToString();
 
             list.ForEach(c =>
             {
-                string input = c.Details;
+                string Details = c.Details;
                 //使用正则表达式 把html标签代码，替换成 纯文本显示
 
-                string Content = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(input, @"(?m)<script[^>]*>(\w|\W)*?</script[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(?m)<style[^>]*>(\w|\W)*?</style[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(?m)<select[^>]*>(\w|\W)*?</select[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(?m)<a[^>]*>(\w|\W)*?</a[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), "(<[^>]+?>)| ", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(\s)+", "", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+                string Content = Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Regex.Replace(Details, @"(?m)<script[^>]*>(\w|\W)*?</script[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(?m)<style[^>]*>(\w|\W)*?</style[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(?m)<select[^>]*>(\w|\W)*?</select[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(?m)<a[^>]*>(\w|\W)*?</a[^>]*>", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), "(<[^>]+?>)| ", "", RegexOptions.Multiline | RegexOptions.IgnoreCase), @"(\s)+", "", RegexOptions.Multiline | RegexOptions.IgnoreCase);
                 if (Content.Length > 150)
                 {
-                    Content = Content.Substring(0, 150) + "....";
+                    Content = Content.Substring(0, 50) + "....";
                 }
 
+                string Title = c.Title;
+          
+                if (Title.Length > 19)
+                {
+                    Title = Title.Substring(0, 19) + "....";
+                }
 
                 data.Add(new BlogListResult.Blog
                 {
                     id = c.Id,
                     img = c.Img,
-                    title = c.Title,
+                    title = Title,
                     content = Content,
                     createDateTime = Tools.ToDateString(c.CreateDateTime),
                 });
@@ -75,7 +81,8 @@ namespace web_api.Controllers
                 result.msg = "成功";
                 result.id = Detail.Id;
                 result.img = Detail.Img;
-                result.title = Detail.Details;
+                result.title = Detail.Title;
+                result.detail = Detail.Details;
                 result.CreateDateTime = Tools.ToDateString(Detail.CreateDateTime);
 
             }
