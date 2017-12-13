@@ -93,23 +93,24 @@ namespace web_api.Controllers
         #endregion
 
         #region 保存一个博客信息
-        public ResultData SaveBlogDetail(string Title, string Details, string Img, string id)
+        [HttpPost]
+        public ResultData SaveBlogDetail([FromBody]SavePostData data)
         {
             var result = new ResultData();
             result.success = false;
             var msg = string.Empty;
             Blog blog = null;
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(data.Id))
             {
                 blog = new Blog();
             }
             else
             {
-                blog = db.Blog.Where(c => c.Id == id).FirstOrDefault();
+                blog = db.Blog.Where(c => c.Id == data.Id).FirstOrDefault();
             }
-            blog.Img = Img;
-            blog.Title = Title;
-            blog.Details = Details;
+            blog.Img = data.Img;
+            blog.Title = data.Title;
+            blog.Details = data.Details;
 
             result.success = BLLService.BlogServices.Save(blog, out msg);
             result.msg = msg;
@@ -123,17 +124,16 @@ namespace web_api.Controllers
 
 
         #region 根据获取博客id删除内容
-        public ResultData DeleteBlogForId(string id)
+        [HttpPost]
+        public ResultData DeleteBlogForId([FromBody]DeletePostData data)
         {
             var result = new ResultData();
             result.success = false;
             var msg = string.Empty;
-            result.success = BLLService.BlogServices.Delete(id, out msg);
+            result.success = BLLService.BlogServices.Delete(data.BlogId, out msg);
             result.msg = msg;
             return result;
         }
-
-
         #endregion
     }
 }

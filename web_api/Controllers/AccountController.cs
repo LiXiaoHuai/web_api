@@ -14,25 +14,26 @@ namespace web_api.Controllers
     public class AccountController : BaseController
     {
         #region 注册一个帐号
-        public ResultData Register(string Account,string Password,string NikeName)
+        [HttpPost]
+        public ResultData Register([FromBody]RegisterPostData data)
         {
             var result = new ResultData();
             result.success = false;
             var msg = string.Empty;
-            if (string.IsNullOrEmpty(Account) || string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password))
             {
                 msg = "帐号密码均不能为空";
                 return result;
             }
-            if (string.IsNullOrEmpty(NikeName))
+            if (string.IsNullOrEmpty(data.NikeName))
             {
                 msg = "昵称不能为空";
                 return result;
             }
             var o = new User();
-            o.Account = Account;
-            o.Password = Password;
-            o.NikeName = NikeName;
+            o.Account = data.Account;
+            o.Password = data.Password;
+            o.NikeName = data.NikeName;
             result.success = BLLService.AccountServices.Register( o ,out msg );
             result.msg = msg;
             return result;
@@ -40,17 +41,18 @@ namespace web_api.Controllers
         #endregion
 
         #region 登录
-        public ResultData Login (string Acconut,string Password)
+        [HttpPost]
+        public ResultData Login ([FromBody]LoginPostData data)
         {
             var result = new ResultData();
             result.success = false;
             var msg = string.Empty;
-            if(string.IsNullOrEmpty(Acconut) || string.IsNullOrEmpty(Password))
+            if(string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password))
             {
                 msg = "帐号密码均不能为空";
                 return result;
             }
-            result.success = BLLService.AccountServices.Login(Acconut, Password, out msg);
+            result.success = BLLService.AccountServices.Login(data.Account, data.Password, out msg);
             result.msg = msg;
 
             return result;
@@ -77,4 +79,5 @@ namespace web_api.Controllers
         }
         #endregion
     }
+    
 }
